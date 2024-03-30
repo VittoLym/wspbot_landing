@@ -1,5 +1,21 @@
-<script lang="ts" setup>
+<script  lang="ts"" setup>
+import { onMounted } from 'vue';
 let validate = true
+  const { signOut, signIn, status, data } = useAuth()
+  const imgRen = ref<any>('')
+  const logged = computed(() => status.value === 'authenticated')
+  async function signOutWC() {
+    await signOut()
+  }
+  async function signInWithCredentials() {
+    try {
+      // This sends a POST request to the `auth.provider.endpoints.signIn` endpoint with `credentials` as the body
+      await signIn()
+      alert('Successfully logged in!')
+    } catch (error) {
+      console.error(error)
+    }
+  }
 async function keishin (){
   const data = await fetch('http://localhost:3005/addusers',{
     method: 'POST',
@@ -14,9 +30,14 @@ async function keishin (){
   const datades = await data.json()
   console.log(datades)
 }
+onMounted(() => {
+  console.log(data.value?.user?.image)
+  imgRen.value = data.value?.user?.image!
+})
 </script>
 <template>
   <main>
+    <img :src="imgRen" alt="">
     <h1 id="how-to-use">How to use:</h1>
     <aside>
       <article>
@@ -34,10 +55,14 @@ async function keishin (){
         </p>
       </article>
       <article>
-        <button v-if="validate" >
-          <NuxtLink to="/LogIn">Sign in</NuxtLink>
+        <button v-if="logged" >
+          <NuxtLink to="/" @click="signOutWC">Sign out</NuxtLink>
         </button>
-        <img v-else src="" alt="backflip">
+        <button v-else >
+          <NuxtLink to="/" @click="signInWithCredentials">Sign in</NuxtLink>
+        </button>
+        <!-- 
+        <img v-else src="" alt="backflip"> -->
       </article>
     </aside>
   </main>
@@ -74,6 +99,11 @@ aside article {
 }
 aside article p{
   font-weight: bolder;
+}
+img{
+  height: 10vh;
+  width: 5vw;
+  border-radius: 100px;
 }
 button{
   text-decoration:none;

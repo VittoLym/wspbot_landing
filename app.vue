@@ -4,7 +4,6 @@ const isMobile = ref<boolean>(true);
 
 function fixsizing():void {
   const totalWidth= ref<number>(globalThis.innerWidth);
-  
   if(totalWidth.value <= 880){
     isMobile.value = true
   }
