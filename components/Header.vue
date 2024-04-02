@@ -37,11 +37,14 @@ function schemeManagement(v : boolean) {
       img?.classList.add('light-mode-img')
     }
   }
-  
+
+function changeValue () {
+  menuVisibility.value = !menuVisibility.value
+}
 const { data } = useAuth()
 
 const imgRen = ref<any>('')
-
+const menuVisibility = ref<boolean>(false);
 onMounted(() => {
   imgRen.value = data.value?.user?.image!
 })
@@ -60,8 +63,9 @@ onMounted(() => {
         <NuxtLink to="/About">About</NuxtLink>
       </ul>
       <SwitchMode @test-emit="schemeManagement" />
-      <img v-if="imgRen" :src="imgRen" alt="">
+      <img @click="changeValue" v-if="imgRen" :src="imgRen" alt="">
     </article>
+    <ModalProfile v-if="menuVisibility" />
   </nav>
 </template>
 

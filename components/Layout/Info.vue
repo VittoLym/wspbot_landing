@@ -9,7 +9,7 @@ let validate = true
   async function signInWithCredentials() {
     try {
       // This sends a POST request to the `auth.provider.endpoints.signIn` endpoint with `credentials` as the body
-      await signIn()
+      await signIn('github')
       alert('Successfully logged in!')
     } catch (error) {
       console.error(error)
