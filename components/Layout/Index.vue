@@ -6,7 +6,6 @@ onMounted(()=>{
   let v = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   const body = document.querySelector('body');
   const bodycl = body?.classList.value; 
-  console.log(bodycl)
   if(bodycl === 'dark-mode'){
     const art = document.getElementById('art')
     art?.classList.remove('light-mode-nav')

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { onMounted } from 'vue';
 import SwitchMode from './SwitchMode.vue';
 function schemeManagement(v : boolean) {
     if(v){
@@ -36,6 +37,14 @@ function schemeManagement(v : boolean) {
       img?.classList.add('light-mode-img')
     }
   }
+  
+const { data } = useAuth()
+
+const imgRen = ref<any>('')
+
+onMounted(() => {
+  imgRen.value = data.value?.user?.image!
+})
 </script>
 <template>
   <nav  id="nav">
@@ -48,15 +57,22 @@ function schemeManagement(v : boolean) {
       <ul>
         <NuxtLink to="/#how-to-use">How to use</NuxtLink>
         <NuxtLink to="/Contact">Contact</NuxtLink>
-        <a href="https://github.com/VittoLym/landing_wspBot" target="_blank">Github</a>
         <NuxtLink to="/About">About</NuxtLink>
       </ul>
       <SwitchMode @test-emit="schemeManagement" />
+      <img v-if="imgRen" :src="imgRen" alt="">
     </article>
   </nav>
 </template>
 
 <style>
+img{
+  margin: auto 1rem;
+  height: 7vh;
+  width: 5vw;
+  border-radius: 100px;
+  cursor: pointer;
+}
 .dark-mode-nav{
   background-color: var(--vt-c-dark-mute);
   color:var(--c-bg-t-dark);

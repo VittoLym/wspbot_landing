@@ -1,8 +1,7 @@
 <script  lang="ts"" setup>
 import { onMounted } from 'vue';
 let validate = true
-  const { signOut, signIn, status, data } = useAuth()
-  const imgRen = ref<any>('')
+  const { signOut, signIn, status } = useAuth()
   const logged = computed(() => status.value === 'authenticated')
   async function signOutWC() {
     await signOut()
@@ -30,14 +29,9 @@ async function keishin (){
   const datades = await data.json()
   console.log(datades)
 }
-onMounted(() => {
-  console.log(data.value?.user?.image)
-  imgRen.value = data.value?.user?.image!
-})
 </script>
 <template>
   <main>
-    <img :src="imgRen" alt="">
     <h1 id="how-to-use">How to use:</h1>
     <aside>
       <article>
@@ -100,11 +94,6 @@ aside article {
 aside article p{
   font-weight: bolder;
 }
-img{
-  height: 10vh;
-  width: 5vw;
-  border-radius: 100px;
-}
 button{
   text-decoration:none;
   transition: all ease .2s;
@@ -129,5 +118,10 @@ button:hover{
 }
 button:active{
   scale: .9;
+}
+button a{
+  display: block;
+  height: 100%;
+  width: 100%;
 }
 </style>
